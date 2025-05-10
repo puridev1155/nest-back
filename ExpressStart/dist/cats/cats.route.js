@@ -39,5 +39,61 @@ router.post('/cats', (req, res, next) => {
     catch (error) {
     }
 });
+router.put('/cats/:id', (req, res, next) => {
+    try {
+        const params = req.params;
+        const body = req.body;
+        let result;
+        cats_model_1.Cat.forEach((cat) => {
+            if (cat.id === params.id) {
+                cat = body;
+                result = cat;
+            }
+        });
+        res.status(200).send({
+            success: true,
+            data: {
+                cat: result
+            }
+        });
+    }
+    catch (error) {
+    }
+});
+router.patch('/cats/:id', (req, res, next) => {
+    try {
+        const params = req.params;
+        const body = req.body;
+        let result;
+        cats_model_1.Cat.forEach((cat) => {
+            if (cat.id === params.id) {
+                cat = { ...cat, ...body };
+                result = cat;
+            }
+        });
+        res.status(200).send({
+            success: true,
+            data: {
+                cat: result
+            }
+        });
+    }
+    catch (error) {
+    }
+});
+router.delete('/cats/:id', (req, res, next) => {
+    try {
+        const params = req.params;
+        const newCat = cats_model_1.Cat.filter((cat) => cat.id !== params.id);
+        res.status(200).send({
+            success: true,
+            data: {
+                cat: newCat
+            }
+        });
+    }
+    catch (error) {
+    }
+});
 exports.default = router;
 //# sourceMappingURL=cats.route.js.map
