@@ -1,5 +1,5 @@
 import{Request, Response} from "express";
-import { Cat, CatType } from './cats.model';
+import { Cat, CatType } from './app.model';
 
 // * 교양이 조회
 export const readAllCat = (req: Request, res: Response) => {
@@ -8,7 +8,7 @@ export const readAllCat = (req: Request, res: Response) => {
     try {
         const params = req.params;
         console.log(params.id);
-        const cats = Cat.find((cat) => {
+        const cats = Cat.find((cat: { id: string; }) => {
             return cat.id === params.id
         });
         res.status(200).send({ 
@@ -33,7 +33,7 @@ export const readCat = (req: Request, res: Response) => {
     try {
         const params = req.params;
         console.log(params.id);
-        const cats = Cat.find((cat) => {
+        const cats = Cat.find((cat: { id: string; }) => {
             return cat.id === params.id
         });
         res.status(200).send({ 
@@ -75,7 +75,7 @@ export const updateCat = (req: Request, res: Response) => {
         const params = req.params;
         const body = req.body;
         let result;
-        Cat.forEach((cat) => {
+        Cat.forEach((cat: { id: string; }) => {
             if (cat.id === params.id) {
                 cat = body;
                 result = cat;
@@ -99,7 +99,7 @@ export const patchCat = (req: Request, res: Response) => {
         const params = req.params;
         const body = req.body;
         let result;
-        Cat.forEach((cat) => {
+        Cat.forEach((cat: { id: string; }) => {
             if (cat.id === params.id) {
                 cat = { ...cat, ...body};
                 result = cat;
@@ -121,7 +121,7 @@ export const patchCat = (req: Request, res: Response) => {
 export const deleteCat = (req: Request, res: Response) => {
     try {
         const params = req.params;
-        const newCat = Cat.filter((cat) => cat.id !== params.id)
+        const newCat = Cat.filter((cat: { id: string; }) => cat.id !== params.id)
        
         res.status(200).send({
             success: true,
